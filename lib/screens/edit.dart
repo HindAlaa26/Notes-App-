@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:notes_app/models/note.dart';
+import 'package:intl/intl.dart';
+import 'package:notes_app/constants/colors.dart';
+import 'package:notes_app/cubit/note_cubit.dart';
 
 
 class EditScreen extends StatefulWidget {
-  final Note? note;
+  final Map<dynamic, dynamic>? note;
+ 
   const EditScreen({super.key, this.note});
 
   @override
@@ -16,15 +19,44 @@ class _EditScreenState extends State<EditScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     if (widget.note != null) {
-      _titleController = TextEditingController(text: widget.note!.title);
-      _contentController = TextEditingController(text: widget.note!.content);
+      _titleController = TextEditingController(text: widget.note!['title']);
+      _contentController = TextEditingController(text: widget.note!['subTitle']);
     }
 
     super.initState();
   }
+void _saveTask() {
+  final title = _titleController.text;
+  final description = _contentController.text;
 
+  if (title.isNotEmpty && description.isNotEmpty) {
+    if (widget.note != null) {
+      NotesCubit.get(context).updateNoteData(
+        title: title,
+        subTitle: description,
+        date: DateFormat.yMMMd().format(DateTime.now()),
+        time: TimeOfDay.now().format(context).toString(),
+        id: widget.note!['id'], 
+      );
+    } else {
+      NotesCubit.get(context).insertToDatabase(
+        title: title,
+        subTitle: description,
+        date: DateFormat.yMMMd().format(DateTime.now()),
+        time: TimeOfDay.now().format(context).toString(),
+      );
+    }
+    Navigator.pop(context);
+  }
+}
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _contentController.dispose();
+     super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,12 +115,15 @@ class _EditScreenState extends State<EditScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pop(
-              context, [_titleController.text, _contentController.text]);
+          _saveTask();
+
+
+    
+       
         },
         elevation: 10,
         backgroundColor: Colors.grey.shade800,
-        child: const Icon(Icons.save),
+        child: const Icon(Icons.save,color: ColorUtility.grey),
       ),
     );
   }

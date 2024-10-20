@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:notes_app/cubit/note_cubit.dart';
 import 'package:notes_app/screens/splash_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+   //WidgetsFlutterBinding.ensureInitialized();
+  //await PreferenceHelper.init();
+ 
+  runApp(BlocProvider(
+    create: (context) => NotesCubit()..createDatabase(),
+    child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
