@@ -26,15 +26,15 @@ class _EditScreenState extends State<EditScreen> {
 
     super.initState();
   }
-void _saveTask() {
+void _saveNote() {
   final title = _titleController.text;
-  final description = _contentController.text;
+  final content = _contentController.text;
 
-  if (title.isNotEmpty && description.isNotEmpty) {
+  if (title.isNotEmpty && content.isNotEmpty) {
     if (widget.note != null) {
       NotesCubit.get(context).updateNoteData(
         title: title,
-        subTitle: description,
+        subTitle: content,
         date: DateFormat.yMMMd().format(DateTime.now()),
         time: TimeOfDay.now().format(context).toString(),
         id: widget.note!['id'], 
@@ -42,7 +42,7 @@ void _saveTask() {
     } else {
       NotesCubit.get(context).insertToDatabase(
         title: title,
-        subTitle: description,
+        subTitle: content,
         date: DateFormat.yMMMd().format(DateTime.now()),
         time: TimeOfDay.now().format(context).toString(),
       );
@@ -115,7 +115,54 @@ void _saveTask() {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          _saveTask();
+          if((_contentController.text.isEmpty && _titleController.text.isEmpty) ||_contentController.text.isEmpty ||  _titleController.text.isEmpty )
+          {
+            showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  backgroundColor: Colors.grey.shade900,
+                  title: const SizedBox(
+                    height: 60,
+                    child: Icon(
+                      Icons.warning_amber,
+                      color: Colors.amber,
+                      size: 25,
+                    ),
+                  ),
+                  content: const Text('Please fill in all fields',
+                                            textAlign: TextAlign.center,
+
+                  style: TextStyle(
+                    color: ColorUtility.white ,
+                    fontSize: 18,
+                  ),),
+                  actions:[
+                         SizedBox(
+                        width: 60,
+                        child: TextButton(
+                            onPressed: () {
+                          Navigator.pop(context);
+                            },
+                         child:  const Text(
+                          'OK',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: Colors.white,
+                          fontSize: 18,
+                         ),
+                        )),
+                      )
+                  ],
+                );
+              },
+            );
+            return;
+          }
+          else
+          {
+  _saveNote();
+          }
+        
 
 
     

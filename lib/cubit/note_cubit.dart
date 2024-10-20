@@ -1,27 +1,27 @@
 import 'dart:math';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:notes_app/constants/colors.dart';
 import 'package:notes_app/cubit/states.dart';
-import 'package:notes_app/models/note.dart';
 import 'package:sqflite/sqflite.dart';
 
 class NotesCubit extends Cubit<NotesStates>
 {
   NotesCubit() : super (NotesInitialState());
  static NotesCubit get(context) => BlocProvider.of(context);
+  
 
-  List<Note> filteredNotes = [];
+ 
   bool sorted = false;
-  List<Note> sortNotesByModifiedTime(List<Note> notes) {
+  List<Map> sortNotesByModifiedTime(List<Map> notes) {
     if (sorted) {
-      notes.sort((a, b) => a.modifiedTime.compareTo(b.modifiedTime));
+      notes.sort((a, b) => (a['time'] ).compareTo(b['time']));
+    
     } else {
-      notes.sort((b, a) => a.modifiedTime.compareTo(b.modifiedTime));
+      notes.sort((b, a) => (a['time'] ).compareTo(b['time']));
     }
 
     sorted = !sorted;
-
+ emit(NotesSortState());
     return notes;
   }
 
@@ -30,25 +30,23 @@ class NotesCubit extends Cubit<NotesStates>
     return backgroundColors[random.nextInt(backgroundColors.length)];
   }
 
+  late Database database;
+  List<Map> notes = [];
+
 void onSearchTextChanged(String searchText) {
-  filteredNotes = sampleNotes.where((note) =>
-    note.content.toLowerCase().contains(searchText.toLowerCase()) ||
-    note.title.toLowerCase().contains(searchText.toLowerCase())
+  if(searchText == "")
+  {
+    getDataFromDatabase(database);
+  }
+  else{
+    notes = notes.where((note) =>
+    note['title'].toLowerCase().contains(searchText.toLowerCase()) ||
+    note['subTitle'].toLowerCase().contains(searchText.toLowerCase())
   ).toList();
+
+  }
   emit(OnSearchTextChangedState());
 }
-
-
-  void deleteNote(int index) {
-   
-      Note note = filteredNotes[index];
-      sampleNotes.remove(note);
-      filteredNotes.removeAt(index);
-   emit(DeleteNoteState());
-  }
-  
-   late Database database;
-  List<Map> notes = [];
  
 
   void createDatabase() async {
@@ -118,19 +116,6 @@ void onSearchTextChanged(String searchText) {
    }
   }
 
-  void updateStatus({
-    required String status,
-    required int id,
-})async
-  {
-    database.rawUpdate(
-        'UPDATE notes SET status = ? WHERE id = ?',
-        [status, id]).then((value) {
-         getDataFromDatabase(database);
-          emit(NotesUpdateStatusDatabaseState());
-
-    });
-  }
 
   void updateNoteData({
      required String title,

@@ -8,33 +8,20 @@ import 'package:notes_app/cubit/states.dart';
 import 'package:notes_app/screens/edit.dart';
 import 'package:notes_app/shared/shared_component/task_item.dart';
 
-
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
  
-
-  //@override
-  //void initState() {
-    //super.initState();
-    //NotesCubit.get(context).filteredNotes = sampleNotes;
-  //}
-
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorUtility.secondary,
       body: BlocBuilder<NotesCubit,NotesStates>
-      (builder: (context, state) {
+      (
+        builder: (context, state) {
         NotesCubit cubit = NotesCubit.get(context);
           var notes = cubit.notes;
+      
       
         return  Padding(
       padding: const EdgeInsets.fromLTRB(16, 40, 16, 0),
@@ -49,9 +36,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 IconButton(
                     onPressed: () {
-                      setState(() {
-                       cubit.filteredNotes = cubit.sortNotesByModifiedTime(cubit.filteredNotes);
-                      });
+                     
+                       notes = cubit.sortNotesByModifiedTime(notes);
+                     
                     },
                     padding: const EdgeInsets.all(0),
                     icon: Container(
@@ -107,7 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
       
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () async {
+        onPressed: () {
         
           Navigator.push(
             context,

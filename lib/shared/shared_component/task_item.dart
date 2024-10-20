@@ -1,6 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:notes_app/constants/colors.dart';
 import 'package:notes_app/cubit/note_cubit.dart';
 import 'package:notes_app/screens/edit.dart';
@@ -8,7 +7,6 @@ import 'package:notes_app/screens/edit.dart';
 
 Widget buildTaskItem({required Map model,context, required int noteIndex}) {
  
-
 NotesCubit cubit = NotesCubit.get(context);
  return Dismissible(
   key: Key(model["id"].toString()),
@@ -33,7 +31,7 @@ NotesCubit cubit = NotesCubit.get(context);
                   child: Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: ListTile(
-                      onTap: () async {
+                      onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -68,7 +66,7 @@ NotesCubit cubit = NotesCubit.get(context);
                       subtitle: Padding(
                         padding: const EdgeInsets.only(top: 8.0),
                         child: Text(
-                          "${model['date']} ${model['time']}",
+                          "${model['date']} , ${model['time']}",
                           style: TextStyle(
                               fontSize: 10,
                               fontStyle: FontStyle.italic,
