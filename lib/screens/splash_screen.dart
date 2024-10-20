@@ -32,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
               Image.asset(ImageUtility.logo),
               Padding(
                 padding:  const EdgeInsets.symmetric(horizontal: 70,vertical: 40),
-                child: LinearProgressIndicator(color: ColorUtility.main,semanticsLabel: "Loading",borderRadius: BorderRadius.circular(10),),
+                child: LinearProgressIndicator(color: ColorUtility.mediumGrey,semanticsLabel: "Loading",borderRadius: BorderRadius.circular(10),),
               )
             ],
           ),

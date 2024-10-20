@@ -108,16 +108,14 @@ Widget tasksBuilder({
       separatorBuilder: (context, index) => const SizedBox(
         height: 5,
       ),
-      itemCount: notes.length) :  Center(
-    child:Column(
+      itemCount: notes.length) :  Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(iconIsEmpty,size: 90,color: ColorUtility.grey.withOpacity(0.5)),
-          const SizedBox(height: 30,),
-          Text(textIsEmpty,style:  TextStyle(fontWeight:FontWeight.bold,fontSize: 20,color: ColorUtility.grey.withOpacity(0.5))),
-        ],
-      ),
-  );
+          children: [
+            Icon(iconIsEmpty,size: 90,color: ColorUtility.lightGrey.withOpacity(0.5)),
+            const SizedBox(height: 30,),
+            Text(textIsEmpty,style:  TextStyle(fontWeight:FontWeight.bold,fontSize: 20,color: ColorUtility.lightGrey.withOpacity(0.5),),textAlign: TextAlign.center,),
+          ],
+        );
 }
 
 Future<dynamic> confirmDialog(BuildContext context) {

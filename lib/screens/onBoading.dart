@@ -147,7 +147,7 @@ Widget onBoadringItem(
               imagePath,
               width: double.infinity,
               fit: BoxFit.cover,
-              height: 400,
+              height: 300,
             ),
             index != 3
                 ? Row( 
@@ -185,7 +185,7 @@ Widget onBoadringItem(
             subTitle,
             style: const TextStyle(
               fontSize: 17,
-              color: ColorUtility.grey,
+              color: ColorUtility.lightGrey,
             ),
           ),
         ),

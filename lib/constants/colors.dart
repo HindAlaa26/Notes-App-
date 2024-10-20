@@ -16,8 +16,11 @@ List<Color> backgroundColors = [
   class ColorUtility {
   static const white = Color(0xfffcfcfc);
   static const secondary = Color.fromRGBO(33, 33, 33, 1);
-  static const grey = Color(0xffEBEBEB);
+  static const lightGrey = Color(0xffEBEBEB);
   static const main = Color(0xff324a5e);
   static const lightBlack = Color(0xff3F414E);
-  // static const black = Color(0xff1D1617);
+   static const grey = Colors.grey;
+   static const darkGrey = Color.fromRGBO(33, 33, 33, 1);
+   static const mediumGrey = Color.fromRGBO(66, 66, 66, 1);
+   static const amber = Colors.amber;
 }

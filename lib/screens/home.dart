@@ -32,7 +32,7 @@ class HomeScreen extends StatelessWidget {
               children: [
                 const Text(
                   'Notes',
-                  style: TextStyle(fontSize: 30, color: Colors.white),
+                  style: TextStyle(fontSize: 30, color: ColorUtility.white),
                 ),
                 IconButton(
                     onPressed: () {
@@ -45,11 +45,11 @@ class HomeScreen extends StatelessWidget {
                       width: 40,
                       height: 40,
                       decoration: BoxDecoration(
-                          color: Colors.grey.shade800.withOpacity(.8),
+                          color: ColorUtility.mediumGrey.withOpacity(.8),
                           borderRadius: BorderRadius.circular(10)),
                       child: const Icon(
                         Icons.sort,
-                        color: Colors.white,
+                        color: ColorUtility.white,
                       ),
                     ))
               ],
@@ -60,16 +60,18 @@ class HomeScreen extends StatelessWidget {
             
             TextField(
               onChanged: cubit.onSearchTextChanged,
-              style: const TextStyle(fontSize: 16, color: Colors.white),
+              style: const TextStyle(fontSize: 16, color: ColorUtility.white),
+              cursorColor: ColorUtility.lightGrey,
               decoration: InputDecoration(
                 contentPadding: const EdgeInsets.symmetric(vertical: 12),
                 hintText: "Search notes...",
-                hintStyle: const TextStyle(color: Colors.grey),
+                
+                hintStyle: const TextStyle(color: ColorUtility.grey),
                 prefixIcon: const Icon(
                   Icons.search,
-                  color: Colors.grey,
+                  color: ColorUtility.grey,
                 ),
-                fillColor: Colors.grey.shade800,
+                fillColor: ColorUtility.mediumGrey,
                 filled: true,
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(30),
@@ -105,11 +107,11 @@ class HomeScreen extends StatelessWidget {
  
         },
         elevation: 10,
-        backgroundColor: Colors.grey.shade800,
+        backgroundColor: ColorUtility.mediumGrey,
         child: const Icon(
           Icons.add,
           size: 38,
-          color: ColorUtility.grey,
+          color: ColorUtility.lightGrey,
         ),
       ),
     );
