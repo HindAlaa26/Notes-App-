@@ -97,6 +97,7 @@ void _saveNote() {
                     hintText: 'Title',
                     hintStyle: TextStyle(color: ColorUtility.grey, fontSize: 30)),
               ),
+              const Divider(thickness: 0.1,color:ColorUtility.grey ,),
               TextField(
                 controller: _contentController,
                 style: const TextStyle(

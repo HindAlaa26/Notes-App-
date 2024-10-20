@@ -19,7 +19,16 @@ NotesCubit cubit = NotesCubit.get(context);
        ),),
      ),
    ),
-  
+   direction: DismissDirection.startToEnd, 
+    confirmDismiss: (direction) async {
+      
+      final result = await confirmDialog(context);
+      return result ?? false;
+    },
+    onDismissed: (direction) {
+      
+      cubit.deleteData(id: model["id"]);
+    },
   child: Padding(
     padding: const EdgeInsets.all(15.0),
     child:Card(
@@ -88,9 +97,7 @@ NotesCubit cubit = NotesCubit.get(context);
                     ),
                   ),
                 )),
-                onDismissed: (direction){
-  NotesCubit.get(context).deleteData(id: model["id"]);
-  },
+               
 
 );
 

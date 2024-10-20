@@ -14,13 +14,15 @@ class NotesCubit extends Cubit<NotesStates>
   bool sorted = false;
   List<Map> sortNotesByModifiedTime(List<Map> notes) {
     if (sorted) {
-      notes.sort((a, b) => (a['time'] ).compareTo(b['time']));
+       notes.sort((b, a) => (a['time'] ).compareTo(b['time']));
     
-    } else {
-      notes.sort((b, a) => (a['time'] ).compareTo(b['time']));
+    }
+      else {
+           notes.sort((a, b) => (a['time'] ).compareTo(b['time']));
+
     }
 
-    sorted = !sorted;
+    sorted = !sorted; 
  emit(NotesSortState());
     return notes;
   }
@@ -108,7 +110,7 @@ void onSearchTextChanged(String searchText) {
            }
 
        });
-       
+       notes.sort((b, a) => (a['time'] ).compareTo(b['time']));
        emit(NotesGetDatabaseState());
    }
    catch (error){
