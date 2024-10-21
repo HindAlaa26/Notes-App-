@@ -100,7 +100,7 @@ void _saveNote() {
                       controller: _titleController,
                       style: const TextStyle(
                         color: ColorUtility.white,
-                        fontSize: 30,
+                        fontSize: 20,
                       ),
                       cursorColor: ColorUtility.lightGrey,
                       decoration: const InputDecoration(
@@ -108,7 +108,7 @@ void _saveNote() {
                         hintText: 'Title',
                         hintStyle: TextStyle(
                           color: ColorUtility.grey,
-                          fontSize: 30,
+                          fontSize: 20,
                         ),
                       ),
                     ),
@@ -199,43 +199,44 @@ void _saveNote() {
 
   Widget buildLinkifiedSubtitle() {
     final cubit = NotesCubit.get(context);
-    return InkWell(
-      onTap: () {
-        cubit.getSubTitle();
-      },
-      child: Linkify(
-        text: widget.note?['subTitle'] ?? "",
-        onOpen: (link) async {
-          if (!await launchUrl(Uri.parse(link.url))) {
-            throw Exception('Could not launch ${link.url}');
-          }
+    return Padding(
+      padding: const EdgeInsets.only(right: 8,bottom: 8,top: 5),
+      child: InkWell(
+        onTap: () {
+          cubit.getSubTitle();
         },
-        linkStyle: const TextStyle(fontSize: 18),
-        style: const TextStyle(
-          fontSize: 18,
-          color: ColorUtility.white,
+        child: Linkify(
+          text: widget.note?['subTitle'] ?? "",
+          onOpen: (link) async {
+            if (!await launchUrl(Uri.parse(link.url))) {
+              throw Exception('Could not launch ${link.url}');
+            }
+          },
+          linkStyle: const TextStyle(fontSize: 20),
+          style: const TextStyle(
+            fontSize: 20,
+            color: ColorUtility.white,
+          ),
         ),
       ),
     );
   }
-  Padding buildEditableSubtitle() {
-    return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextField(
-                            controller: _contentController,
-                            style: const TextStyle(
-                              color: ColorUtility.white,
-                            ),
-                            maxLines: null,
-                            cursorColor: ColorUtility.lightGrey,
-                            decoration: const InputDecoration(
-                              border: InputBorder.none,
-                              hintText: 'Type something here',
-                              hintStyle: TextStyle(
-                                color: ColorUtility.grey,
-                              ),
-                            ),
-                          ),
-                      );
+  Widget buildEditableSubtitle() {
+    return TextField(
+        controller: _contentController,
+        style: const TextStyle(
+          color: ColorUtility.white,
+          fontSize: 20,
+        ),
+        maxLines: null,
+        cursorColor: ColorUtility.lightGrey,
+        decoration: const InputDecoration(
+          border: InputBorder.none,
+          hintText: 'Type something here',
+          hintStyle: TextStyle(
+            color: ColorUtility.grey,
+          ),
+        ),
+      );
   }
 }
