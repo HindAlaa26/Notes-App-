@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'dart:math';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:notes_app/constants/colors.dart';
@@ -9,16 +10,23 @@ class NotesCubit extends Cubit<NotesStates>
   NotesCubit() : super (NotesInitialState());
  static NotesCubit get(context) => BlocProvider.of(context);
   
-
+  bool isSubTitleClick = false;
+   void getSubTitle()
+  {
+    isSubTitleClick = true;
+    print("$isSubTitleClick");
+    emit(NotesClickOnSubTitleState());
+  }
  
   bool sorted = false;
   List<Map> sortNotesByModifiedTime(List<Map> notes) {
     if (sorted) {
-       notes.sort((b, a) => (a['time'] ).compareTo(b['time']));
+        notes.sort((a, b) => (a['time'] ).compareTo(b['time']));
     
     }
       else {
-           notes.sort((a, b) => (a['time'] ).compareTo(b['time']));
+                notes.sort((b, a) => (a['time'] ).compareTo(b['time']));
+
 
     }
 
@@ -110,7 +118,7 @@ void onSearchTextChanged(String searchText) {
            }
 
        });
-       notes.sort((b, a) => (a['time'] ).compareTo(b['time']));
+      notes  =   notes.reversed.toList();
        emit(NotesGetDatabaseState());
    }
    catch (error){

@@ -23,4 +23,9 @@ abstract class NotesStates {}
 
 // search for note
  class OnSearchTextChangedState extends NotesStates {}
+
+// on click on sub title
+ class NotesClickOnSubTitleState extends NotesStates {}
+
+ 
  

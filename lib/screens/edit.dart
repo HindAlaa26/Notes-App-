@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:intl/intl.dart';
 import 'package:notes_app/constants/colors.dart';
 import 'package:notes_app/cubit/note_cubit.dart';
+import 'package:notes_app/cubit/states.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 
 class EditScreen extends StatefulWidget {
@@ -70,6 +74,7 @@ void _saveNote() {
               IconButton(
                   onPressed: () {
                     Navigator.pop(context);
+                      NotesCubit.get(context).isSubTitleClick = false;
                   },
                   padding: const EdgeInsets.all(0),
                   icon: Container(
@@ -86,36 +91,48 @@ void _saveNote() {
             ],
           ),
           Expanded(
-              child: ListView(
-            children: [
-              TextField(
-                controller: _titleController,
-                style: const TextStyle(color: ColorUtility.white, fontSize: 30),
-                cursorColor: ColorUtility.lightGrey,
-                decoration: const InputDecoration(
-                    border: InputBorder.none,
-                    hintText: 'Title',
-                    hintStyle: TextStyle(color: ColorUtility.grey, fontSize: 30)),
-              ),
-              const Divider(thickness: 0.1,color:ColorUtility.grey ,),
-              TextField(
-                controller: _contentController,
-                style: const TextStyle(
-                  color: ColorUtility.white,
-                ),
-                maxLines: null,
-                cursorColor: ColorUtility.lightGrey,
-                decoration: const InputDecoration(
-                    border: InputBorder.none,
-                    hintText: 'Type something here',
-                    hintStyle: TextStyle(
+            child: BlocBuilder<NotesCubit, NotesStates>(
+              builder: (context, state) {
+                final cubit = NotesCubit.get(context);
+                return ListView(
+                  children: [
+                    TextField(
+                      controller: _titleController,
+                      style: const TextStyle(
+                        color: ColorUtility.white,
+                        fontSize: 30,
+                      ),
+                      cursorColor: ColorUtility.lightGrey,
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Title',
+                        hintStyle: TextStyle(
+                          color: ColorUtility.grey,
+                          fontSize: 30,
+                        ),
+                      ),
+                    ),
+                    const Divider(
+                      thickness: 0.1,
                       color: ColorUtility.grey,
-                    )),
-              ),
-            ],
-          ))
-        ]),
+                    ),
+                  if (widget.note?['subTitle'] != null)
+                    cubit.isSubTitleClick
+                        ? 
+                        buildEditableSubtitle()
+                        
+                        :
+                         buildLinkifiedSubtitle()
+                   else 
+                           buildEditableSubtitle()
+                        
+                  ]
+                );
+              }
+        
+        ),
       ),
+        ])),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           if((_contentController.text.isEmpty && _titleController.text.isEmpty) ||_contentController.text.isEmpty ||  _titleController.text.isEmpty )
@@ -163,7 +180,9 @@ void _saveNote() {
           }
           else
           {
+
   _saveNote();
+  NotesCubit.get(context).isSubTitleClick = false;
           }
         
 
@@ -176,5 +195,47 @@ void _saveNote() {
         child: const Icon(Icons.save,color: ColorUtility.lightGrey),
       ),
     );
+  }
+
+  Widget buildLinkifiedSubtitle() {
+    final cubit = NotesCubit.get(context);
+    return InkWell(
+      onTap: () {
+        cubit.getSubTitle();
+      },
+      child: Linkify(
+        text: widget.note?['subTitle'] ?? "",
+        onOpen: (link) async {
+          if (!await launchUrl(Uri.parse(link.url))) {
+            throw Exception('Could not launch ${link.url}');
+          }
+        },
+        linkStyle: const TextStyle(fontSize: 18),
+        style: const TextStyle(
+          fontSize: 18,
+          color: ColorUtility.white,
+        ),
+      ),
+    );
+  }
+  Padding buildEditableSubtitle() {
+    return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextField(
+                            controller: _contentController,
+                            style: const TextStyle(
+                              color: ColorUtility.white,
+                            ),
+                            maxLines: null,
+                            cursorColor: ColorUtility.lightGrey,
+                            decoration: const InputDecoration(
+                              border: InputBorder.none,
+                              hintText: 'Type something here',
+                              hintStyle: TextStyle(
+                                color: ColorUtility.grey,
+                              ),
+                            ),
+                          ),
+                      );
   }
 }
