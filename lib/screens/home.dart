@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:notes_app/constants/colors.dart';
 import 'package:notes_app/cubit/note_cubit.dart';
-import 'package:notes_app/cubit/states.dart';
+import 'package:notes_app/cubit/note_states.dart';
 import 'package:notes_app/screens/edit.dart';
 import 'package:notes_app/shared/shared_component/task_item.dart';
 

@@ -2,7 +2,7 @@ import 'dart:ffi';
 import 'dart:math';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:notes_app/constants/colors.dart';
-import 'package:notes_app/cubit/states.dart';
+import 'package:notes_app/cubit/note_states.dart';
 import 'package:sqflite/sqflite.dart';
 
 class NotesCubit extends Cubit<NotesStates> {

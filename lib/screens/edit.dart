@@ -4,7 +4,7 @@ import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:intl/intl.dart';
 import 'package:notes_app/constants/colors.dart';
 import 'package:notes_app/cubit/note_cubit.dart';
-import 'package:notes_app/cubit/states.dart';
+import 'package:notes_app/cubit/note_states.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 
