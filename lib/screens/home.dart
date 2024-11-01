@@ -97,9 +97,8 @@ class HomeScreen extends StatelessWidget {
       
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () async{
-          await PreferenceHelper.isOnBoardingSeen(
-                            isOnBoardingSeen: false);
+        onPressed: () {
+         
           Navigator.push(
             context,
             MaterialPageRoute(
