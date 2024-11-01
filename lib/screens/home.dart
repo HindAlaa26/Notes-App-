@@ -6,6 +6,7 @@ import 'package:notes_app/constants/colors.dart';
 import 'package:notes_app/cubit/note_cubit.dart';
 import 'package:notes_app/cubit/note_states.dart';
 import 'package:notes_app/screens/edit.dart';
+import 'package:notes_app/shared/network/local_network/preferences_helper.dart';
 import 'package:notes_app/shared/shared_component/task_item.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -96,8 +97,9 @@ class HomeScreen extends StatelessWidget {
       
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-        
+        onPressed: () async{
+          await PreferenceHelper.isOnBoardingSeen(
+                            isOnBoardingSeen: false);
           Navigator.push(
             context,
             MaterialPageRoute(

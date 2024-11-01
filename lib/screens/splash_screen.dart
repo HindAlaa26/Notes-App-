@@ -3,7 +3,7 @@ import 'package:notes_app/constants/colors.dart';
 import 'package:notes_app/constants/images.dart';
 import 'package:notes_app/shared/network/local_network/preferences_helper.dart';
 import 'package:notes_app/screens/home.dart';
-import 'package:notes_app/screens/onBoading.dart';
+import 'package:notes_app/screens/onBoarding.dart';
 
 
 class SplashScreen extends StatefulWidget {
@@ -44,7 +44,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void getStart()async{
     await Future.delayed(const Duration(seconds: 3));
-    if(!mounted)return;
     if(await PreferenceHelper.getIsOnBoardingSeen == true)
     {
    
